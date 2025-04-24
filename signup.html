@@ -1,0 +1,58 @@
+
+<!-- signup.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - HealthGuard Pro</title>
+		<link rel="icon" href="images/logo.png">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-box">
+            <a href="index.html" class="auth-logo">
+                <img src="images/logo.png" alt="HealthGuard Pro Logo">
+            </a>
+            <h2>Create Account</h2>
+            <form id="signupForm" class="auth-form" action="signup.php" method="POST">
+    <div class="form-group">
+        <label for="fullName">Full Name</label>
+        <input type="text" id="fullName" name="full_name" required>
+    </div>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <div class="password-input">
+            <input type="password" id="password" name="password" required>
+            <i class="fas fa-eye toggle-password"></i>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <div class="password-input">
+            <input type="password" id="confirmPassword" name="confirm_password" required>
+            <i class="fas fa-eye toggle-password"></i>
+        </div>
+    </div>
+    <div class="form-group terms">
+        <label>
+            <input type="checkbox" id="terms" required>
+            I agree to the <a href="terms.html">Terms of Service</a> and <a href="privacy-policy.html">Privacy Policy</a>
+        </label>
+    </div>
+    <button type="submit" class="auth-btn">Sign Up</button>
+</form>
+
+        </div>
+    </div>
+    <!-- <script src="js/auth.js"></script> -->
+
+</body>
+</html>

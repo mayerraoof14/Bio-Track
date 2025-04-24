@@ -1,0 +1,136 @@
+
+<!-- cart.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - HealthGuard Pro</title>
+		<link rel="icon" href="images/logo.png">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/cart.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+<!-- Header & Navigation -->
+<header>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="index.html">
+                <img src="images/logo.png" alt="Bio Track Logo">
+            </a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="#features">Features</a></li> <!-- Redirects to the Features section on the home page -->
+            <li><a href="#products">Products</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li class="cart-icon">
+                <a href="cart.html">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </a>
+            </li>
+            <li><a href="login.html" class="login-btn">Login</a></li>
+        </ul>
+    </nav>
+</header>
+    <section class="cart-section">
+        <div class="cart-container">
+            <h1>Shopping Cart</h1>
+           
+            <div class="cart-content">
+                <div class="cart-items">
+                    <!-- Cart items will be dynamically populated -->
+                    <div class="cart-item">
+                        <img src="images/product-1.png" alt="HealthGuard Basic">
+                        <div class="item-details">
+                            <h3>HealthGuard Basic</h3>
+                            <p>Color: Black</p>
+                        </div>
+                        <div class="item-quantity">
+                            <button class="quantity-btn minus">-</button>
+                            <input type="number" value="1" min="1" max="10">
+                            <button class="quantity-btn plus">+</button>
+                        </div>
+                        <div class="item-price">$199.99</div>
+                        <button class="remove-item"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+
+                <div class="cart-summary">
+                    <h3>Order Summary</h3>
+                    <div class="summary-item">
+                        <span>Subtotal</span>
+                        <span>$199.99</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Shipping</span>
+                        <span>Free</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Tax</span>
+                        <span>$20.00</span>
+                    </div>
+                    <div class="summary-total">
+                        <span>Total</span>
+                        <span>$219.99</span>
+                    </div>
+                    <button class="checkout-btn" onclick="window.location.href='checkout.html'">
+                        Proceed to Checkout
+                    </button>
+                    <div class="continue-shopping">
+                        <a href="index.html#products"><i class="fas fa-arrow-left"></i> Continue Shopping</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+	<!-- footer.html -->
+<footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>HealthGuard Pro</h3>
+            <p>Innovative health monitoring solutions for better care.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Support</h3>
+            <ul>
+                <li><a href="warranty.html">Warranty</a></li>
+                <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                <li><a href="index.html#faq">FAQ</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Contact</h3>
+            <p><i class="fas fa-phone"></i> (555) 123-4567</p>
+            <p><i class="fas fa-envelope"></i> support@healthguardpro.com</p>
+            <p><i class="fas fa-location-dot"></i> 123 Health Street, NY</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 HealthGuard Pro. All rights reserved.</p>
+    </div>
+</footer>
+
+    <script src="js/script.js"></script>
+    <script src="js/cart.js"></script>
+</body>
+</html>
