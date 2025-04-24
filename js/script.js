@@ -68,49 +68,56 @@ function updateCartCounter() {
 
 
 // Live Chat Widget
-function initChatWidget() {
-    const chatWidget = document.getElementById('chatWidget');
-    const chatTrigger = document.getElementById('chatTrigger');
-    const minimizeChat = document.getElementById('minimizeChat');
-    const messageInput = document.getElementById('messageInput');
-    const sendMessage = document.getElementById('sendMessage');
-    const chatMessages = document.getElementById('chatMessages');
+document.addEventListener("DOMContentLoaded", function () {
+    const chatWidget = document.querySelector('.chat-widget');
+    const chatTrigger = document.querySelector('.chat-trigger');
+    const chatInput = document.querySelector('.chat-input input');
+    const chatMessages = document.querySelector('.chat-messages');
 
-    if (chatTrigger) {
-        chatTrigger.addEventListener('click', () => {
-            chatWidget.style.display = 'block';
-        });
+    // Toggle chat visibility
+    chatTrigger.addEventListener('click', () => {
+        chatWidget.style.display = chatWidget.style.display === 'block' ? 'none' : 'block';
+    });
+
+    // Function to create a message bubble
+    function appendMessage(text, type) {
+        const message = document.createElement('div');
+        message.classList.add('message', type);
+        message.innerHTML = `<span class="text">${text}</span>`;
+        chatMessages.appendChild(message);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
-    if (minimizeChat) {
-        minimizeChat.addEventListener('click', () => {
-            chatWidget.style.display = 'none';
-        });
-    }
+    // Handle Enter key press
+    chatInput.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter' && chatInput.value.trim() !== '') {
+            const userText = chatInput.value.trim();
+            appendMessage(userText, 'user');
+            chatInput.value = '';
 
-    if (sendMessage && messageInput) {
-        sendMessage.addEventListener('click', () => {
-            const message = messageInput.value.trim();
-            if (message) {
-                appendMessage('user', message);
-                messageInput.value = '';
-                // Simulate response
-                setTimeout(() => {
-                    appendMessage('support', 'Thank you for your message. Our team will respond shortly.');
-                }, 1000);
-            }
-        });
-    }
-}
+            // Simulate bot reply after delay
+            setTimeout(() => {
+                const botReply = generateBotReply(userText);
+                appendMessage(botReply, 'bot');
+            }, 600);
+        }
+    });
 
-function appendMessage(type, content) {
-    const chatMessages = document.getElementById('chatMessages');
-    const messageDiv = document.createElement('div');
-    messageDiv.className = `message ${type}-message`;
-    messageDiv.textContent = content;
-    chatMessages.appendChild(messageDiv);
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-}
+    // Simulated bot response logic
+    function generateBotReply(userMessage) {
+        // Basic keyword-based response
+        const messageLower = userMessage.toLowerCase();
+        if (messageLower.includes("hello") || messageLower.includes("hi")) {
+            return "Hi there! How can I assist you today?";
+        } else if (messageLower.includes("price")) {
+            return "The Bio Track Classic starts at $99.99.";
+        } else if (messageLower.includes("help")) {
+            return "Sure! Please describe the issue you're facing.";
+        } else {
+            return "Thank you for your message! We'll get back to you shortly.";
+        }
+    }
+});
 
 // Initialize Common Functions
 document.addEventListener('DOMContentLoaded', () => {
@@ -203,4 +210,4 @@ document.addEventListener("DOMContentLoaded", function () {
             alert(`${quantity} x "${productName}" added to cart!`);
         });
     }
-});
+});sc
