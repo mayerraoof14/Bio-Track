@@ -1,0 +1,266 @@
+/* privacy.css */
+
+/* Privacy Hero Section */
+.privacy-hero {
+    height: 30vh;
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+                url('../images/privacy-hero-bg.jpeg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: var(--white);
+    margin-top: 80px; /* Account for fixed navbar */
+    padding: 2rem;
+}
+
+.privacy-hero h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    animation: fadeInDown 0.8s ease;
+}
+
+.privacy-hero p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    animation: fadeInUp 0.8s ease;
+}
+
+/* Privacy Content Section */
+.privacy-content {
+    padding: 5rem 0;
+    background-color: var(--light-gray);
+}
+
+.policy-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    background-color: var(--white);
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* Policy Sections */
+.policy-section {
+    padding: 2.5rem;
+    border-bottom: 1px solid #eee;
+    animation: fadeIn 1s ease;
+}
+
+.policy-section:last-child {
+    border-bottom: none;
+}
+
+.policy-section h2 {
+    color: var(--primary-color);
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.policy-section h2::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background-color: var(--secondary-color);
+}
+
+.policy-section p {
+    color: var(--text-color);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+}
+
+/* Lists Styling */
+.policy-section ul {
+    list-style: none;
+    padding-left: 1.5rem;
+}
+
+.policy-section ul li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 1rem;
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.policy-section ul li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: var(--secondary-color);
+    font-size: 1.2rem;
+}
+
+/* Animations */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .privacy-hero {
+        height: auto;
+        background: none;
+        color: black;
+        margin-top: 0;
+        padding: 2rem 0;
+    }
+
+    .policy-container {
+        box-shadow: none;
+    }
+
+    .policy-section {
+        page-break-inside: avoid;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .privacy-hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .privacy-hero p {
+        font-size: 1rem;
+    }
+
+    .policy-container {
+        padding: 0 1.5rem;
+    }
+
+    .policy-section {
+        padding: 2rem;
+    }
+
+    .policy-section h2 {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .privacy-hero h1 {
+        font-size: 2rem;
+    }
+
+    .policy-container {
+        padding: 0 1rem;
+    }
+
+    .policy-section {
+        padding: 1.5rem;
+    }
+
+    .policy-section h2 {
+        font-size: 1.3rem;
+    }
+}
+
+/* Accessibility Improvements */
+.policy-section {
+    position: relative;
+}
+
+.policy-section:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.3);
+}
+
+/* Hover Effects */
+.policy-section:hover {
+    background-color: #f8f9fa;
+    transition: background-color 0.3s ease;
+}
+
+/* Table of Contents (if needed) */
+.policy-toc {
+    background-color: #f8f9fa;
+    padding: 2rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+}
+
+.policy-toc ul {
+    list-style: none;
+    padding: 0;
+}
+
+.policy-toc ul li {
+    margin-bottom: 0.5rem;
+}
+
+.policy-toc a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.policy-toc a:hover {
+    color: var(--secondary-color);
+}
+
+/* Additional Styling */
+.policy-section strong {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.policy-section em {
+    font-style: italic;
+    color: var(--secondary-color);
+}
+
+.policy-section code {
+    background-color: #f8f9fa;
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+    font-family: monospace;
+}
+
+/* Last Updated Badge */
+.last-updated {
+    display: inline-block;
+    background-color: var(--secondary-color);
+    color: var(--white);
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    margin-top: 1rem;
+}
