@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         loginButton.disabled = true;
 
-        fetch('./login.php', {
+        fetch('/login.php', {
             method: 'POST',
             body: formData
         })
