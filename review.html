@@ -138,22 +138,47 @@
     </footer>
 
     <script>
-        // Fetch data from localStorage
-        const shippingData = JSON.parse(localStorage.getItem('shippingData'));
-        if (shippingData) {
-            document.getElementById('review-shipping').innerHTML = `
-                <p><strong>Name:</strong> ${shippingData.fullName}</p>
-                <p><strong>Email:</strong> ${shippingData.email}</p>
-                <p><strong>Phone:</strong> ${shippingData.phone}</p>
-                <p><strong>Address:</strong> ${shippingData.address}, ${shippingData.city}, ${shippingData.state}, ${shippingData.zip}</p>
-            `;
+    const shippingData = JSON.parse(localStorage.getItem('shippingData'));
+    if (shippingData) {
+        document.getElementById('review-shipping').innerHTML = `
+            <p><strong>Name:</strong> ${shippingData.fullName}</p>
+            <p><strong>Email:</strong> ${shippingData.email}</p>
+            <p><strong>Phone:</strong> ${shippingData.phone}</p>
+            <p><strong>Address:</strong> ${shippingData.address}, ${shippingData.city}, ${shippingData.state}, ${shippingData.zip}</p>
+        `;
+    }
+
+    function placeOrder() {
+        const cart = JSON.parse(localStorage.getItem('bioTrackCart')) || [];
+        const shipping = JSON.parse(localStorage.getItem('shippingData')) || {};
+        const userLoggedIn = localStorage.getItem('bioTrackUserLoggedIn') === 'true';
+
+        if (!userLoggedIn) {
+            alert('You must be logged in to place an order.');
+            window.location.href = 'login.html';
+            return;
         }
 
-        function placeOrder() {
-            alert("Order placed successfully!");
-            // Optionally redirect to a thank you page
-        }
-    </script>
+        const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+        fetch('place-order.php', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ cart, shipping, total })
+        })
+        .then(res => res.text())
+        .then(data => {
+            alert(data);
+            localStorage.removeItem('bioTrackCart');
+            localStorage.removeItem('shippingData');
+            window.location.href = 'thankyou.html';
+        })
+        .catch(err => {
+            alert("Error placing order: " + err.message);
+        });
+    }
+</script>
+
 	
 	<footer>
     <div class="footer-content">
