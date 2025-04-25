@@ -1,191 +1,116 @@
-// login.js
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('loginForm');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const rememberMe = document.getElementById('remember');
+    const errorDiv = document.getElementById('loginError');
+    const successDiv = document.getElementById('loginSuccess');
+    const loginButton = document.getElementById('loginButton');
+    const togglePassword = document.querySelector('.toggle-password');
+    const logoutBtn = document.getElementById('logout-btn');
+    const loginBtn = document.querySelector('.btnLogin-popup');
 
-class LoginManager {
-    constructor() {
-        this.form = document.getElementById('loginForm');
-        this.emailInput = document.getElementById('email');
-        this.passwordInput = document.getElementById('password');
-        this.rememberMe = document.getElementById('remember');
-        this.errorDiv = document.getElementById('loginError');
-        this.successDiv = document.getElementById('loginSuccess');
-        this.loginButton = document.getElementById('loginButton');
-
-        // Demo credentials (In real application, these would be in a database)
-        this.demoUsers = [
-            {
-                email: 'demo@example.com',
-                password: 'demo123',
-                name: 'Demo User',
-                role: 'user'
-            },
-            {
-                email: 'admin@example.com',
-                password: 'admin123',
-                name: 'Admin User',
-                role: 'admin'
-            }
-        ];
-
-        this.initializeLogin();
+    // Load remembered email
+    const rememberedEmail = localStorage.getItem('rememberedEmail');
+    if (rememberedEmail) {
+        emailInput.value = rememberedEmail;
+        rememberMe.checked = true;
     }
 
-    initializeLogin() {
-        // Check for remembered credentials
-        this.checkRememberedCredentials();
-
-        // Add form submit handler
-        this.form.addEventListener('submit', (e) => this.handleLogin(e));
-
-        // Add password visibility toggle
-        const togglePassword = document.querySelector('.toggle-password');
-        if (togglePassword) {
-            togglePassword.addEventListener('click', () => this.togglePasswordVisibility());
-        }
+    // Toggle password visibility
+    if (togglePassword) {
+        togglePassword.addEventListener('click', () => {
+            const type = passwordInput.type === 'password' ? 'text' : 'password';
+            passwordInput.type = type;
+            togglePassword.classList.toggle('fa-eye');
+            togglePassword.classList.toggle('fa-eye-slash');
+        });
     }
 
-    async handleLogin(e) {
+    // Handle form login
+    form.addEventListener('submit', function (e) {
         e.preventDefault();
 
-        const email = this.emailInput.value.trim();
-        const password = this.passwordInput.value.trim();
+        const email = emailInput.value.trim();
+        const password = passwordInput.value.trim();
 
-        // Reset error messages
-        this.hideError();
-        this.hideSuccess();
-
-        // Validate inputs
-        if (!this.validateInputs(email, password)) {
+        if (!email || !password) {
+            showError('Please enter email and password');
             return;
         }
 
-        // Show loading state
-        this.setLoadingState(true);
+        const formData = new FormData(form);
 
-        try {
-            // Simulate API call delay
-            await new Promise(resolve => setTimeout(resolve, 1000));
+        loginButton.disabled = true;
 
-            // Check credentials
-            const user = this.authenticateUser(email, password);
+        fetch('./login.php', {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                // Save user info
+                localStorage.setItem('bioTrackUserId', data.user_id);
+                localStorage.setItem('bioTrackUserEmail', email);
 
-            if (user) {
-                // Handle successful login
-                this.handleSuccessfulLogin(user);
+                if (rememberMe.checked) {
+                    localStorage.setItem('rememberedEmail', email);
+                } else {
+                    localStorage.removeItem('rememberedEmail');
+                }
+
+                showSuccess('Login successful! Redirecting...');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1500);
             } else {
-                this.showError('Invalid email or password');
+                showError(data.message || 'Invalid credentials');
             }
-        } catch (error) {
-            this.showError('An error occurred during login');
-            console.error('Login error:', error);
-        } finally {
-            this.setLoadingState(false);
-        }
-    }
+        })
+        .catch(err => {
+            console.error('Login Error:', err);
+            showError('Server error. Please try again.');
+        })
+        .finally(() => {
+            loginButton.disabled = false;
+        });
+    });
 
-    validateInputs(email, password) {
-        if (!email || !password) {
-            this.showError('Please fill in all fields');
-            return false;
-        }
-
-        if (!this.isValidEmail(email)) {
-            this.showError('Please enter a valid email address');
-            return false;
-        }
-
-        return true;
-    }
-
-    authenticateUser(email, password) {
-        // In a real application, this would make an API call to your backend
-        return this.demoUsers.find(user => 
-            user.email === email && user.password === password
-        );
-    }
-
-    async handleSuccessfulLogin(user) {
-        // Save user data
-        const userData = {
-            id: Date.now(), // Simulate user ID
-            email: user.email,
-            name: user.name,
-            role: user.role,
-            lastLogin: new Date().toISOString()
-        };
-
-        // Save to localStorage
-        localStorage.setItem('user', JSON.stringify(userData));
-
-        // Handle remember me
-        if (this.rememberMe.checked) {
-            localStorage.setItem('rememberedEmail', user.email);
+    // Auth UI update
+    function updateAuthUI() {
+        const isLoggedIn = !!localStorage.getItem('bioTrackUserId');
+        if (isLoggedIn) {
+            if (loginBtn) loginBtn.style.display = 'none';
+            if (logoutBtn) logoutBtn.style.display = 'inline-block';
         } else {
-            localStorage.removeItem('rememberedEmail');
-        }
-
-        // Show success message
-        this.showSuccess('Login successful! Redirecting...');
-
-        // Redirect after a short delay
-        setTimeout(() => {
-            window.location.href = 'dashboard.html';
-        }, 1500);
-    }
-
-    checkRememberedCredentials() {
-        const rememberedEmail = localStorage.getItem('rememberedEmail');
-        if (rememberedEmail) {
-            this.emailInput.value = rememberedEmail;
-            this.rememberMe.checked = true;
+            if (loginBtn) loginBtn.style.display = 'inline-block';
+            if (logoutBtn) logoutBtn.style.display = 'none';
         }
     }
 
-    togglePasswordVisibility() {
-        const type = this.passwordInput.type === 'password' ? 'text' : 'password';
-        this.passwordInput.type = type;
-        
-        const icon = document.querySelector('.toggle-password');
-        icon.classList.toggle('fa-eye');
-        icon.classList.toggle('fa-eye-slash');
+    // Logout
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+            localStorage.removeItem('bioTrackUserId');
+            localStorage.removeItem('bioTrackUserEmail');
+            updateAuthUI();
+            alert('You have been logged out.');
+            window.location.href = 'index.html';
+        });
     }
 
-    isValidEmail(email) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
+    function showError(message) {
+        errorDiv.textContent = message;
+        errorDiv.style.display = 'block';
+        successDiv.style.display = 'none';
     }
 
-    setLoadingState(isLoading) {
-        if (isLoading) {
-            this.loginButton.classList.add('loading');
-            this.loginButton.disabled = true;
-        } else {
-            this.loginButton.classList.remove('loading');
-            this.loginButton.disabled = false;
-        }
+    function showSuccess(message) {
+        successDiv.textContent = message;
+        successDiv.style.display = 'block';
+        errorDiv.style.display = 'none';
     }
 
-    showError(message) {
-        this.errorDiv.textContent = message;
-        this.errorDiv.style.display = 'block';
-        this.successDiv.style.display = 'none';
-    }
-
-    hideError() {
-        this.errorDiv.style.display = 'none';
-    }
-
-    showSuccess(message) {
-        this.successDiv.textContent = message;
-        this.successDiv.style.display = 'block';
-        this.errorDiv.style.display = 'none';
-    }
-
-    hideSuccess() {
-        this.successDiv.style.display = 'none';
-    }
-}
-
-// Initialize Login Manager
-document.addEventListener('DOMContentLoaded', () => {
-    new LoginManager();
+    updateAuthUI();
 });
