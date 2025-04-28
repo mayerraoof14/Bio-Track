@@ -1,0 +1,243 @@
+
+<!-- review.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Review Your Order - HealthGuard Pro</title>
+  <link rel="icon" href="images/logo.png">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/review.css">
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <style>
+    .cart-modal { display: none; position: fixed; top: 70px; right: 0; }
+  </style>
+</head>
+<body>
+<!-- Header & Navigation -->
+<header>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="index.html">
+                <img src="images/logo.png" alt="Bio Track Logo">
+            </a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#products">Products</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li class="cart-icon">
+                <a href="javascript:void(0);" id="cart-icon">
+                  <i class='bx bx-cart'></i>
+                  <span id="cart-count" class="cart-count">0</span>
+                </a>
+              </li>
+            <li><a href="login.html" class="login-btn" id="login-btn">Login</a></li>
+            <li><button id="logout-btn" class="btnLogin-popup">Logout</button></li>
+        </ul>
+		<div class="mobile-menu" id="mobile-menu">
+    <i class="fas fa-bars"></i>
+  </div>
+
+        <!-- Cart Modal -->
+        <div class="cart-modal" id="cart-modal">
+            <div class="cart-header">
+                <h2>Your Cart</h2>
+                <i class='bx bx-x' id="close-cart"></i>
+            </div>
+            <div class="cart-items" id="cart-items">
+                <!-- Cart items will be dynamically inserted here -->
+            </div>
+            <button class="btn checkout-btn" onclick="window.location.href='checkout.html'">Checkout</button>
+        </div>
+    </nav>
+</header>
+
+  <section class="checkout-section">
+        <div class="checkout-container">
+            <div class="checkout-steps">
+                <div class="step"><span class="step-number">1</span>Shipping</div>
+                <div class="step active"><span class="step-number">2</span>Review</div>
+            </div>
+            <div class="checkout-content">
+                <div class="checkout-form">
+                    <h2>Review Your Order</h2>
+                    <div id="review-shipping"></div>
+                    <section id="order-summary-section">
+                        <h2>Your Order</h2>
+                        <div id="order-summary"></div>
+                    </section>
+                    <button id="place-order-btn" class="primary-btn">Place Order</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+	<!-- footer.html -->
+<footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>HealthGuard Pro</h3>
+            <p>Innovative health monitoring solutions for better care.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Support</h3>
+            <ul>
+                <li><a href="warranty.html">Warranty</a></li>
+                <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                <li><a href="index.html#faq">FAQ</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Contact</h3>
+            <p><i class="fas fa-phone"></i> (555) 123-4567</p>
+            <p><i class="fas fa-envelope"></i> support@healthguardpro.com</p>
+            <p><i class="fas fa-location-dot"></i> 123 Health Street, NY</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 HealthGuard Pro. All rights reserved.</p>
+    </div>
+</footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Toggle Login/Logout in nav
+      const isLoggedIn = localStorage.getItem('bioTrackUserLoggedIn') === 'true';
+      const loginBtn  = document.getElementById('login-btn');
+      const logoutBtn = document.getElementById('logout-btn');
+      loginBtn.style.display  = isLoggedIn ? 'none' : 'inline-block';
+      logoutBtn.style.display = isLoggedIn ? 'inline-block' : 'none';
+      logoutBtn.addEventListener('click', e => {
+        e.preventDefault();
+        localStorage.removeItem('bioTrackUserLoggedIn');
+        window.location.href = 'logout.php';
+      });
+
+      // Render Shipping Info
+      const shippingData = JSON.parse(localStorage.getItem('shippingData') || '{}');
+      if (shippingData.fullName) {
+        document.getElementById('review-shipping').innerHTML = `
+		<style>
+		#review-shipping {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+}
+
+#review-shipping p {
+    margin: 10px 0;
+    color: #333;
+}
+
+#review-shipping strong {
+    color: #2c3e50;
+    font-weight: 600;
+}
+</style>
+          <p><strong>Name:</strong> ${shippingData.fullName}</p>
+          <p><strong>Email:</strong> ${shippingData.email}</p>
+          <p><strong>Phone:</strong> ${shippingData.phone}</p>
+          <p><strong>Address:</strong> ${shippingData.address}, ${shippingData.city}, ${shippingData.state} ${shippingData.zip}</p>
+        `;
+      }
+
+      // Render Order Summary
+      const cart = JSON.parse(localStorage.getItem('bioTrackCart') || '[]');
+      const summaryEl = document.getElementById('order-summary');
+      if (cart.length === 0) {
+        summaryEl.innerHTML = '<p>Your cart is empty.</p>';
+      } else {
+        let orderHTML = '<ul>';
+        cart.forEach(item => {
+          orderHTML += `
+		  <style>
+		  #order-summary ul {
+    list-style: none; /* Remove default bullets */
+    padding: 0;
+    margin: 0;
+}
+
+#order-summary li {
+    background-color: #f4f6f8;
+    margin-bottom: 10px;
+    padding: 12px 15px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#order-summary li strong {
+    color: #2c3e50;
+}
+
+/* Optional: total price */
+#order-summary p strong {
+    display: block;
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    color: #2c3e50;
+}
+</style>
+		  <li>${item.name} × ${item.quantity}: $${(item.price*item.quantity).toFixed(2)}</li>`;
+        });
+        orderHTML += '</ul>';
+        const total = cart.reduce((sum, i) => sum + i.price * i.quantity, 0);
+        orderHTML += `<p><strong>Total: $${total.toFixed(2)}</strong></p>`;
+        summaryEl.innerHTML = orderHTML;
+      }
+
+      // Place Order (no login required)
+      document.getElementById('place-order-btn').addEventListener('click', () => {
+        const total = cart.reduce((sum, i) => sum + i.price * i.quantity, 0);
+        fetch('place_order.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ cart, shipping: shippingData, total })
+        })
+        .then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            alert('Order placed successfully!');
+            localStorage.removeItem('bioTrackCart');
+            localStorage.removeItem('shippingData');
+            window.location.href = 'index.html';
+          } else {
+            alert('Error: ' + (data.error || data.message));
+          }
+        })
+        .catch(err => {
+          console.error(err);
+          alert('An error occurred. Please try again.');
+        });
+      });
+    });
+  </script>
+</body>
+</html>
+```
+

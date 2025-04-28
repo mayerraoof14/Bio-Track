@@ -1,0 +1,220 @@
+<!-- about.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - HealthGuard Pro</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/about.css">
+<link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        .cart-modal {
+            display: none;
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            width: 300px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            z-index: 999;
+        }
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            border-bottom: 1px solid #ccc;
+        }
+        .cart-items {
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+        }
+        .checkout-btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 0 0 8px 8px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<!-- Header & Navigation -->
+<header>
+    <nav class="navbar">
+        <div class="logo">
+            <a href="index.html">
+                <img src="images/logo.png" alt="Bio Track Logo">
+            </a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#products">Products</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li class="cart-icon">
+                <a href="javascript:void(0);" id="cart-icon">
+                  <i class='bx bx-cart'></i>
+                  <span id="cart-count" class="cart-count">0</span>
+                </a>
+              </li>
+            <li><a href="login.html" class="login-btn" id="login-btn">Login</a></li>
+            <li><button id="logout-btn" class="btnLogin-popup">Logout</button></li>
+        </ul>
+		<div class="mobile-menu" id="mobile-menu">
+    <i class="fas fa-bars"></i>
+  </div>
+
+        <!-- Cart Modal -->
+        <div class="cart-modal" id="cart-modal">
+            <div class="cart-header">
+                <h2>Your Cart</h2>
+                <i class='bx bx-x' id="close-cart"></i>
+            </div>
+            <div class="cart-items" id="cart-items">
+                <!-- Cart items will be dynamically inserted here -->
+            </div>
+            <button class="btn checkout-btn" onclick="window.location.href='checkout.html'">Checkout</button>
+        </div>
+    </nav>
+</header>
+
+    <!-- About Hero Section -->
+    <section class="about-hero">
+        <div class="about-hero-content">
+            <h1>About HealthGuard Pro</h1>
+            <p>Revolutionizing Health Monitoring Technology</p>
+        </div>
+    </section>
+
+    <!-- Our Story Section -->
+    <section class="our-story">
+        <div class="story-content">
+            <h2>Our Story</h2>
+            <p>Founded in 2020, HealthGuard Pro emerged from a simple yet powerful vision: making professional-grade health monitoring accessible to everyone. Our team of medical professionals and technology experts came together to create a solution that brings peace of mind to patients and their loved ones.</p>
+            <p>Today, we serve thousands of users worldwide, helping them take control of their health through innovative monitoring solutions.</p>
+        </div>
+        <div class="story-image">
+            <img src="images/hero-bg.jpg" alt="HealthGuard Pro Story">
+        </div>
+    </section>
+
+    <!-- Mission & Values Section -->
+    <section class="mission-values">
+        <div class="mission">
+            <h2>Our Mission</h2>
+            <p>To empower individuals with real-time health insights, enabling proactive healthcare management and peace of mind.</p>
+        </div>
+        <div class="values-grid">
+            <div class="value-card">
+                <i class="fas fa-heart"></i>
+                <h3>Patient First</h3>
+                <p>We prioritize user well-being in every decision we make.</p>
+            </div>
+            <div class="value-card">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Reliability</h3>
+                <p>Delivering accurate and consistent health monitoring.</p>
+            </div>
+            <div class="value-card">
+                <i class="fas fa-lightbulb"></i>
+                <h3>Innovation</h3>
+                <p>Continuously improving our technology for better care.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team">
+        <h2>Our Leadership Team</h2>
+        <div class="team-grid">
+            <div class="team-member">
+                <img src="images/batool.jpg" alt="Batool Maher">
+                <h3>Batool Maher</h3>
+                <p>Chief Medical Officer</p>
+            </div>
+            <div class="team-member">
+                <img src="images/mayer.jpg" alt="Mayer Raoof">
+                <h3>Mayer Raoof</h3>
+                <p>Chief Technology Officer</p>
+            </div>
+            <div class="team-member">
+                <img src="images/amira.jpg" alt="Amira Ayman">
+                <h3>Amira Ayman</h3>
+                <p>Head of Product Development</p>
+            </div>
+        </div>
+    </section>
+
+<!-- footer.html -->
+<footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>HealthGuard Pro</h3>
+            <p>Innovative health monitoring solutions for better care.</p>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#products">Products</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Support</h3>
+            <ul>
+                <li><a href="warranty.html">Warranty</a></li>
+                <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                <li><a href="index.html#faq">FAQ</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>Contact</h3>
+            <p><i class="fas fa-phone"></i> (555) 123-4567</p>
+            <p><i class="fas fa-envelope"></i> support@healthguardpro.com</p>
+            <p><i class="fas fa-location-dot"></i> 123 Health Street, NY</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 HealthGuard Pro. All rights reserved.</p>
+    </div>
+</footer>
+
+<script>
+    const cartIcon = document.getElementById('cart-icon');
+    const cartModal = document.getElementById('cart-modal');
+    const closeCart = document.getElementById('close-cart');
+
+    cartIcon.addEventListener('click', () => {
+        cartModal.style.display = 'block';
+    });
+
+    closeCart.addEventListener('click', () => {
+        cartModal.style.display = 'none';
+    });
+
+    window.addEventListener('click', (e) => {
+        if (e.target === cartModal) {
+            cartModal.style.display = 'none';
+        }
+    });
+</script>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

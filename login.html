@@ -1,0 +1,97 @@
+<!-- login.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - HealthGuard Pro</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/auth.css">
+	<link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-box">
+            <a href="index.html" class="auth-logo">
+                <img src="images/logo.png" alt="HealthGuard Pro Logo">
+            </a>
+            <h2>Welcome Back</h2>
+            <!-- login.html -->
+<form id="loginForm" class="auth-form" action="login.php" method="POST">
+
+    <div class="error-message" id="loginError" style="display: none;"></div>
+    <div class="success-message" id="loginSuccess" style="display: none;"></div>
+    
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required>
+    </div>
+    
+    <div class="form-group">
+        <label for="password">Password</label>
+        <div class="password-input">
+            <input type="password" id="password" name="password" required>
+            <i class="fas fa-eye toggle-password"></i>
+        </div>
+    </div>
+    
+    <div class="form-group remember-me">
+        <label>
+            <input type="checkbox" id="remember">
+            Remember me
+        </label>
+        <a href="#forgot-password" class="forgot-password">Forgot Password?</a>
+    </div>
+    
+    <button type="submit" class="auth-btn" id="loginButton">Login</button>
+    
+    <p class="auth-links">
+        Don't have an account? <a href="signup.html">Sign up</a>
+    </p>
+</form>
+        </div>
+    </div>
+	
+<script>
+// Add an event listener to the login form's submit event
+document.getElementById('loginForm').addEventListener('submit', async function(e) {
+    e.preventDefault(); // Prevent the form from submitting normally and reloading the page
+
+    const formData = new FormData(this); // Collect form data (username, password, etc.)
+
+    try {
+        // Send a POST request to 'login.php' with the form data
+        const res = await fetch('login.php', {
+            method: 'POST',
+            body: formData
+        });
+
+        // Parse the response from the server (assumed to be in JSON format)
+        const data = await res.json();
+
+        // If login is successful, handle successful login
+        if (data.success) {
+            // Store user data in localStorage for session persistence
+            localStorage.setItem('user_id', data.user_id);  // Store user ID
+            localStorage.setItem('userFullName', data.full_name);  // Store user's full name
+            
+            // Redirect the user to the home page after successful login
+            window.location.href = 'index.html'; // ✅ redirect to home page
+        } else {
+            // If login failed, show an error message from the response
+            alert(data.message || "Login failed");
+        }
+    } catch (err) {
+        // Handle any errors that occur during the login process
+        console.error('Login error:', err);
+        alert('Something went wrong!'); // Show a generic error message
+    }
+});
+
+</script>
+<script src="js/script.js"></script>
+
+
+</body>
+</html>
